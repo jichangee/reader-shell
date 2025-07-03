@@ -86,35 +86,42 @@ async function startReader(epubPath) {
   }
 
   function saveProgress() {
-    setBookProgress(epubPath, { chapter: currentChapter, scroll: box.getScroll() - 1 });
+    setBookProgress(epubPath, { chapter: currentChapter, scroll: currentScroll });
+  }
+
+  function changeChapter(chapter) {
+    currentChapter += chapter;
+    currentScroll = 0;
+    saveProgress();
+    render();
   }
 
   // 快捷键
   screen.key(["right", "e"], () => {
     if (currentChapter < chapters.length - 1) {
-      currentChapter++;
-      currentScroll = 0;
-      saveProgress();
-      render();
+      changeChapter(1)
     }
   });
   screen.key(["left", "w"], () => {
     if (currentChapter > 0) {
-      currentChapter--;
-      currentScroll = 0;
-      saveProgress();
-      render();
+      changeChapter(-1)
     }
   });
   screen.key(["up", "s"], () => {
     currentScroll--;
+    if (currentScroll < 0) {
+      changeChapter(-1)
+      return
+    }
     render();
   });
   screen.key(["down", "d"], () => {
-    if (currentScroll < box.content.length - box.height) {
-      currentScroll++;
-      render();
+    currentScroll++;
+    if (currentScroll > box.getScrollHeight()) {
+      changeChapter(1)
+      return
     }
+    render();
   });
   screen.key(["a"], () => {
     // 老板键
