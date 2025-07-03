@@ -92,7 +92,7 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
     status.setContent(
       `progress: ${currentChapter + 1}/${
         chapters.length
-      }  |  ←/j:prev  →/k:next n:up m:down  b:boss  q:exit`
+      }  |  ←/w:prev  →/e:next ↑/s:up ↓/d:down  a:boss  q:exit`
     );
     // 恢复滚动位置
     box.setScroll(currentScroll);
@@ -104,7 +104,7 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
   }
 
   // 快捷键
-  screen.key(["right", "k"], () => {
+  screen.key(["right", "e"], () => {
     if (currentChapter < chapters.length - 1) {
       currentChapter++;
       currentScroll = 0;
@@ -112,7 +112,7 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
       render();
     }
   });
-  screen.key(["left", "j"], () => {
+  screen.key(["left", "w"], () => {
     if (currentChapter > 0) {
       currentChapter--;
       currentScroll = 0;
@@ -120,15 +120,15 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
       render();
     }
   });
-  screen.key(["up", "n"], () => {
+  screen.key(["up", "s"], () => {
     currentScroll--;
     render();
   });
-  screen.key(["down", "m"], () => {
+  screen.key(["down", "d"], () => {
     currentScroll++;
     render();
   });
-  screen.key(["b"], () => {
+  screen.key(["a"], () => {
     // 老板键
     if (box.height === 0) {
       boss.height = '80%'
