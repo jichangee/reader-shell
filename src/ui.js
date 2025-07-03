@@ -17,7 +17,9 @@ const colorFns = {
 
 async function startReader(epubPath) {
   const chapters = await parseEpub(epubPath);
-  let currentChapter = getBookProgress(epubPath);
+  const progress = getBookProgress(epubPath);
+  let currentChapter = (progress && progress.chapter) || 0;
+  let currentScroll = (progress && progress.scroll) || 0;
 
   blessed.unicode.wcwidth = wcwidth;
   // 创建blessed屏幕
@@ -102,21 +104,29 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
         chapters.length
       }  |  ←/h:prev  →/l:next  c:color  q:exit`
     );
+    // 恢复滚动位置
+    box.setScroll(currentScroll);
     screen.render();
+  }
+
+  function saveProgress() {
+    setBookProgress(epubPath, { chapter: currentChapter, scroll: box.getScroll() - 1 });
   }
 
   // 快捷键
   screen.key(["right", "l"], () => {
     if (currentChapter < chapters.length - 1) {
       currentChapter++;
-      setBookProgress(epubPath, currentChapter);
+      currentScroll = 0;
+      saveProgress();
       render();
     }
   });
   screen.key(["left", "h"], () => {
     if (currentChapter > 0) {
       currentChapter--;
-      setBookProgress(epubPath, currentChapter);
+      currentScroll = 0;
+      saveProgress();
       render();
     }
   });
@@ -129,8 +139,13 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
     render();
   });
   screen.key(["q", "C-c"], () => {
-    setBookProgress(epubPath, currentChapter);
+    saveProgress();
     process.exit(0);
+  });
+
+  box.on('scroll', () => {
+    currentScroll = box.getScroll();
+    saveProgress();
   });
 
   render();

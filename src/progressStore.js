@@ -22,12 +22,17 @@ function saveProgress(progress) {
 
 function getBookProgress(bookPath) {
     const progress = loadProgress();
-    return progress[bookPath] || 0;
+    const val = progress[bookPath];
+    if (typeof val === 'number') {
+        // 兼容旧数据
+        return { chapter: val, scroll: 0 };
+    }
+    return val || { chapter: 0, scroll: 0 };
 }
 
-function setBookProgress(bookPath, chapterIdx) {
+function setBookProgress(bookPath, obj) {
     const progress = loadProgress();
-    progress[bookPath] = chapterIdx;
+    progress[bookPath] = obj;
     saveProgress(progress);
 }
 
