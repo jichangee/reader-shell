@@ -3,9 +3,10 @@ import chalk from "chalk";
 import { parseEpub } from "./epubReader.js";
 import path from "path";
 import { getBookProgress, setBookProgress } from "./progressStore.js";
+import { config } from "./config.js";
 
 // 默认字体颜色
-let fontColor = "white";
+let fontColor = config.fontColor;
 const colorFns = {
   white: chalk.white,
   green: chalk.green,
@@ -24,7 +25,7 @@ async function startReader(epubPath) {
   const screen = blessed.screen({
     smartCSR: true,
     fullUnicode: true,
-    title: "node",
+    title: config.title,
   });
 
   // 掩人耳目，假装在开发
@@ -34,21 +35,7 @@ async function startReader(epubPath) {
     width: "100%",
     height: "80%",
     border: "none",
-    content: ` @ multi (webpack)-dev-server/client?http://192.168.0.189:8081/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
-
- warning  in ./src/pagesActive/slotMachine/index5.vue?vue&type=template&id=6430da5c&scoped=true&
-
-Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js):
-(Emitted value instead of an instance of Error) <v-uni-view v-for="label in item.label">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
-
- @ ./src/pagesActive/slotMachine/index5.vue?vue&type=template&id=6430da5c&scoped=true& 1:0-701 1:0-701
- @ ./src/pagesActive/slotMachine/index5.vue
- @ ./src/pages.json
- @ ./src/main.js
- @ multi (webpack)-dev-server/client?http://192.168.0.189:8081/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
-
- `
- 
+    content: config.bossContent
   });
 
   // 章节内容框
