@@ -4,6 +4,7 @@ import { parseEpub } from "./epubReader.js";
 import path from "path";
 import { getBookProgress, setBookProgress } from "./progressStore.js";
 import { config } from "./config.js";
+import fs from 'fs';
 
 // 默认字体颜色
 let fontColor = config.fontColor;
@@ -75,9 +76,9 @@ async function startReader(epubPath) {
     const colorFn = colorFns[fontColor] || chalk.white;
     box.setContent(colorFn(chapters[currentChapter] || ""));
     status.setContent(
-      `progress: ${currentChapter + 1}/${
+      `progress: ${currentScroll}/${box.getScrollHeight()}  |  chapter: ${currentChapter + 1}/${
         chapters.length
-      }  |  ←/w:prev  →/e:next ↑/s:up ↓/d:down  a:boss  q:exit`
+      }  |  ←/w:prev →/e:next ↑/s:up ↓/d:down a:boss q:exit`
     );
     // 恢复滚动位置
     box.setScroll(currentScroll);
