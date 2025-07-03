@@ -147,7 +147,6 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
   });
 
   box.on('scroll', () => {
-    currentScroll = box.getScroll();
     saveProgress();
   });
 
