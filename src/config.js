@@ -1,7 +1,7 @@
 export const config = {
   fontColor: "white",
   title: "node",
-  bossContent: ` @ multi (webpack)-dev-server/client?http://192.168.0.189:8081/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+  bossContent: ` @ multi (webpack)-dev-server/client?http://localhost:8081/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
 
     warning  in ./src/pages/reader/index.vue?vue&type=template&id=6430da5c&scoped=true&
 
@@ -12,7 +12,7 @@ export const config = {
     @ ./src/pages/reader/index.vue
     @ ./src/pages.json
     @ ./src/main.js
-    @ multi (webpack)-dev-server/client?http://192.168.0.189:8081/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+    @ multi (webpack)-dev-server/client?http://localhost:8081/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
 
   `
 };
