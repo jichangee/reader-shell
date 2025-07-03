@@ -1,5 +1,4 @@
 import blessed from "blessed";
-import wcwidth from "wcwidth";
 import chalk from "chalk";
 import { parseEpub } from "./epubReader.js";
 import path from "path";
@@ -21,7 +20,6 @@ async function startReader(epubPath) {
   let currentChapter = (progress && progress.chapter) || 0;
   let currentScroll = (progress && progress.scroll) || 0;
 
-  blessed.unicode.wcwidth = wcwidth;
   // 创建blessed屏幕
   const screen = blessed.screen({
     smartCSR: true,
@@ -125,8 +123,10 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
     render();
   });
   screen.key(["down", "d"], () => {
-    currentScroll++;
-    render();
+    if (currentScroll < box.content.length - box.height) {
+      currentScroll++;
+      render();
+    }
   });
   screen.key(["a"], () => {
     // 老板键

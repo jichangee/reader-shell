@@ -1,5 +1,4 @@
 import EPub from 'epub';
-import he from 'he';
 
 /**
  * 解析epub文件，返回章节文本数组
@@ -20,8 +19,7 @@ function parseEpub(epubPath) {
                         chapters[idx] = '';
                     } else {
                         let text = data.toString('utf-8');
-                        const plain = text.replace(/<[^>]+>/g, '');
-                        chapters[idx] = he.decode(plain);
+                        chapters[idx] = text.replace(/<[^>]+>/g, '') + '\n\n 本章完';
                     }
                     loaded++;
                     if (loaded === chapterIds.length) {
