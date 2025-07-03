@@ -48,18 +48,8 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
  @ ./src/pages.json
  @ ./src/main.js
  @ multi (webpack)-dev-server/client?http://192.168.0.189:8081/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
-  @ multi (webpack)-dev-server/client?http://192.168.0.189:8081/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
 
- warning  in ./src/pagesActive/slotMachine/index5.vue?vue&type=template&id=6430da5c&scoped=true&
-
-Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js):
-(Emitted value instead of an instance of Error) <v-uni-view v-for="label in item.label">: component lists rendered with v-for should have explicit keys. See https://vuejs.org/guide/list.html#key for more info.
-
- @ ./src/pagesActive/slotMachine/index5.vue?vue&type=template&id=6430da5c&scoped=true& 1:0-701 1:0-701
- @ ./src/pagesActive/slotMachine/index5.vue
- @ ./src/pages.json
- @ ./src/main.js
- @ multi (webpack)-dev-server/client?http://192.168.0.189:8081/sockjs-node (webpack)/hot/dev-server.js ./src/main.js`
+ `
  
   });
 
@@ -102,7 +92,7 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
     status.setContent(
       `progress: ${currentChapter + 1}/${
         chapters.length
-      }  |  ←/h:prev  →/l:next  c:color  q:exit`
+      }  |  ←/j:prev  →/k:next n:up m:down  b:boss  q:exit`
     );
     // 恢复滚动位置
     box.setScroll(currentScroll);
@@ -114,7 +104,7 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
   }
 
   // 快捷键
-  screen.key(["right", "l"], () => {
+  screen.key(["right", "k"], () => {
     if (currentChapter < chapters.length - 1) {
       currentChapter++;
       currentScroll = 0;
@@ -122,7 +112,7 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
       render();
     }
   });
-  screen.key(["left", "h"], () => {
+  screen.key(["left", "j"], () => {
     if (currentChapter > 0) {
       currentChapter--;
       currentScroll = 0;
@@ -130,13 +120,26 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
       render();
     }
   });
-  screen.key(["c"], () => {
-    // 切换字体颜色
-    const colors = ["white", "green", "cyan", "magenta", "yellow"];
-    const idx = colors.indexOf(fontColor);
-    fontColor = colors[(idx + 1) % colors.length];
-    box.style.fg = fontColor;
+  screen.key(["up", "n"], () => {
+    currentScroll--;
     render();
+  });
+  screen.key(["down", "m"], () => {
+    currentScroll++;
+    render();
+  });
+  screen.key(["b"], () => {
+    // 老板键
+    if (box.height === 0) {
+      boss.height = '80%'
+      box.height = '30%'
+      status.height = '10%'
+    } else {
+      boss.height = '100%'
+      box.height = 0
+      status.height = 0
+    }
+    render()
   });
   screen.key(["q", "C-c"], () => {
     saveProgress();
