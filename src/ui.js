@@ -26,6 +26,8 @@ async function startReader(epubPath) {
     fullUnicode: true,
     title: "node",
   });
+
+  // 掩人耳目，假装在开发
   const boss = blessed.box({
     top: 0,
     left: 0,
@@ -63,12 +65,13 @@ Module Warning (from ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-lo
   const box = blessed.box({
     top: "70%",
     left: 0,
-    width: "100%",
+    width: "300",
     height: "30%",
     tags: true,
     scrollable: true,
     alwaysScroll: true,
     keys: true,
+    focused: true,
     mouse: true,
     vi: true,
     border: "none",
