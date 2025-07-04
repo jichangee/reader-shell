@@ -155,3 +155,5 @@ if (!epubPath) {
   process.exit(1);
 }
 startReader(path.resolve(epubPath));
+
+export { startReader };

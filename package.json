@@ -1,7 +1,7 @@
 {
   "name": "reader-shell",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "1.0.1",
+  "main": "cli.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,5 +14,8 @@
     "blessed": "^0.1.81",
     "chalk": "^5.4.1",
     "epub": "^1.3.0"
+  },
+  "bin": {
+    "reader-shell": "./cli.js"
   }
 }
