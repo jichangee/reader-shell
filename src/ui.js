@@ -149,11 +149,13 @@ async function startReader(epubPath) {
 }
 
 // 允许命令行直接运行
-const epubPath = process.argv[2];
-if (!epubPath) {
-  console.error("用法: node src/ui.js <epub文件路径>");
-  process.exit(1);
+if (import.meta.url.endsWith(process.argv[1])) {
+  const epubPath = process.argv[2];
+  if (!epubPath) {
+    console.error("用法: node src/ui.js <epub文件路径>");
+    process.exit(1);
+  }
+  startReader(path.resolve(epubPath));
 }
-startReader(path.resolve(epubPath));
 
 export { startReader };
