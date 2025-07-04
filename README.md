@@ -46,8 +46,6 @@ node src/ui.js ./books/三体.epub
 - [epub](https://www.npmjs.com/package/epub) 电子书解析
 - [blessed](https://www.npmjs.com/package/blessed) 终端 UI
 - [chalk](https://www.npmjs.com/package/chalk) 终端字体颜色
-- [he](https://www.npmjs.com/package/he) HTML 实体解码
-- [iconv-lite](https://www.npmjs.com/package/iconv-lite) 编码转码（如需）
 
 ## 许可协议
 MIT 
