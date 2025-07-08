@@ -1,6 +1,6 @@
 # 终端电子书阅读器
 
-一个基于 Node.js 的终端电子书阅读器，支持导入 epub 文件、记住阅读进度、快捷键翻页和字体颜色切换。
+一个基于 Node.js 的终端电子书阅读器，支持导入 epub 文件、记住阅读进度、快捷键翻页。
 
 ![reader-shell-demo.gif?raw=true](https://cdn.jsdelivr.net/gh/jichangee/gallery@master/imgur/reader-shell-demo.gif?raw=true)
 
