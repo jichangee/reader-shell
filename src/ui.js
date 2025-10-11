@@ -72,9 +72,18 @@ async function startReader(epubPath) {
   screen.append(box);
   screen.append(status);
 
-  function render() {
+  // 用于跟踪当前显示的章节，避免重复设置相同内容
+  let lastDisplayedChapter = -1;
+
+  function render(forceContentRefresh = false) {
     const colorFn = colorFns[fontColor] || chalk.white;
-    box.setContent(colorFn(chapters[currentChapter] || ""));
+
+    // 只有当章节改变或强制刷新时才重新设置内容
+    if (forceContentRefresh || lastDisplayedChapter !== currentChapter) {
+      box.setContent(colorFn(chapters[currentChapter] || ""));
+      lastDisplayedChapter = currentChapter;
+    }
+
     status.setContent(
       `progress: ${currentScroll}/${box.getScrollHeight()}  |  chapter: ${currentChapter + 1}/${
         chapters.length
@@ -93,7 +102,7 @@ async function startReader(epubPath) {
     currentChapter += chapter;
     currentScroll = 0;
     saveProgress();
-    render();
+    render(true); // 切换章节时强制刷新内容
   }
 
   // 快捷键
@@ -134,7 +143,7 @@ async function startReader(epubPath) {
       box.height = 0
       status.height = 0
     }
-    render()
+    render(false) // 老板键切换时不强制刷新内容
   });
   screen.key(["q", "C-c"], () => {
     saveProgress();
@@ -145,7 +154,7 @@ async function startReader(epubPath) {
     saveProgress();
   });
 
-  render();
+  render(true); // 初始渲染时强制设置内容
 }
 
 // 允许命令行直接运行
