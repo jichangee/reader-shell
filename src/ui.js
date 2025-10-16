@@ -1,6 +1,7 @@
 import blessed from "blessed";
 import chalk from "chalk";
 import { parseEpub } from "./epubReader.js";
+import { parseTxt } from "./txtReader.js";
 import path from "path";
 import { getBookProgress, setBookProgress } from "./progressStore.js";
 import { config } from "./config.js";
@@ -16,9 +17,19 @@ const colorFns = {
   yellow: chalk.yellow,
 };
 
-async function startReader(epubPath) {
-  const chapters = await parseEpub(epubPath);
-  const progress = getBookProgress(epubPath);
+async function startReader(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  let chapters;
+
+  if (ext === '.epub') {
+    chapters = await parseEpub(filePath);
+  } else if (ext === '.txt') {
+    chapters = await parseTxt(filePath);
+  } else {
+    throw new Error(`不支持的文件格式: ${ext}`);
+  }
+
+  const progress = getBookProgress(filePath);
   let currentChapter = (progress && progress.chapter) || 0;
   let currentScroll = (progress && progress.scroll) || 0;
 
@@ -44,7 +55,7 @@ async function startReader(epubPath) {
     top: "70%",
     left: 0,
     width: "300",
-    height: "30%",
+    height: "40%",
     tags: true,
     scrollable: true,
     alwaysScroll: true,
@@ -95,7 +106,7 @@ async function startReader(epubPath) {
   }
 
   function saveProgress() {
-    setBookProgress(epubPath, { chapter: currentChapter, scroll: currentScroll });
+    setBookProgress(filePath, { chapter: currentChapter, scroll: currentScroll });
   }
 
   function changeChapter(chapter) {
@@ -158,11 +169,11 @@ async function startReader(epubPath) {
 }
 
 // 允许命令行直接运行
-const epubPath = process.argv[2];
-if (!epubPath) {
-  console.error("用法: node src/ui.js <epub文件路径>");
+const filePath = process.argv[2];
+if (!filePath) {
+  console.error("用法: node src/ui.js <文件路径>");
   process.exit(1);
 }
-startReader(path.resolve(epubPath));
+startReader(path.resolve(filePath));
 
 export { startReader };
