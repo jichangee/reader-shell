@@ -151,6 +151,7 @@ function parseTxt(txtPath) {
                 return chapter
                     .replace(/\r\n/g, '\n')  // 统一换行符
                     .replace(/\n{3,}/g, '\n\n')  // 去除多余的空行
+                    .replace(/\s+/g, '')  // 删除所有空格和换行
                     .trim();
             }).filter(chapter => chapter.length > 0);
 
