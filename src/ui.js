@@ -45,7 +45,7 @@ async function startReader(filePath) {
     top: 0,
     left: 0,
     width: "100%",
-    height: "80%",
+    height: "70%",
     border: "none",
     content: config.bossContent
   });
@@ -55,7 +55,7 @@ async function startReader(filePath) {
     top: "70%",
     left: 0,
     width: "300",
-    height: "40%",
+    height: "30%",
     tags: true,
     scrollable: true,
     alwaysScroll: true,
@@ -133,7 +133,7 @@ async function startReader(filePath) {
       changeChapter(-1)
       return
     }
-    render();
+    render(true);
   });
   screen.key(["down", "d"], () => {
     currentScroll++;
@@ -141,7 +141,7 @@ async function startReader(filePath) {
       changeChapter(1)
       return
     }
-    render();
+    render(true);
   });
   screen.key(["a"], () => {
     // 老板键
