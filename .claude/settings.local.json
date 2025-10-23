@@ -6,7 +6,11 @@
       "Bash(git push:*)",
       "Bash(node:*)",
       "Bash(timeout:*)",
-      "Read(//Users/xuejichang/Documents/book/**)"
+      "Read(//Users/xuejichang/Documents/book/**)",
+      "mcp__web-search-prime__webSearchPrime",
+      "WebSearch",
+      "WebFetch(domain:platform.openai.com)",
+      "WebFetch(domain:aws.amazon.com)"
     ],
     "deny": [],
     "ask": []

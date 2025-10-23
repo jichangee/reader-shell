@@ -19,7 +19,7 @@ function parseEpub(epubPath) {
                         chapters[idx] = '';
                     } else {
                         let text = data.toString('utf-8');
-                        chapters[idx] = text.replace(/<[^>]+>/g, '').replace(/\r\n/g, '');
+                        chapters[idx] = text.replace(/<[^>]+>/g, '').replace(/\s+/g, '');
                     }
                     loaded++;
                     if (loaded === chapterIds.length) {
